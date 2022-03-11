@@ -71,9 +71,9 @@ Route::group(['middleware' => ['cors', 'json.response'], 'as' => 'api.', 'prefix
          */
         Route::apiResource('permissions', 'PermissionController')->names('permissions'); // embed all permission's controller api function route
 
-        Route::get('get-list-of-permissions-with-trashed', 'PermissionController@allWithTrashed')->name('permissions.all.trashed');
+        //Route::get('get-list-of-permissions-with-trashed', 'PermissionController@allWithTrashed')->name('permissions.all.trashed');
 
-        Route::get('/permissions/{permission}/destroy', 'PermissionController@delete')->name('permissions.delete');
+        //Route::get('/permissions/{permission}/destroy', 'PermissionController@delete')->name('permissions.delete');
 
         /* 
 
@@ -92,9 +92,9 @@ Route::group(['middleware' => ['cors', 'json.response'], 'as' => 'api.', 'prefix
          */
         Route::apiResource('roles', 'RoleController')->names('roles'); // embed all role's controller api function route
 
-        Route::get('/get-list-of-roles-with-trashed', 'RoleController@allWithTrashed')->name('roles.all.trashed');
+        //Route::get('/get-list-of-roles-with-trashed', 'RoleController@allWithTrashed')->name('roles.all.trashed');
 
-        Route::get('/roles/{role}/destroy', 'RoleController@delete')->name('roles.delete');
+        //Route::get('/roles/{role}/destroy', 'RoleController@delete')->name('roles.delete');
 
         /* Route::controller(RoleController::class,function () {
 
