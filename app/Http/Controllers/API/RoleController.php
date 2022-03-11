@@ -7,6 +7,7 @@ use App\Http\Requests\Common\RoleRequest;
 use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 
 class RoleController extends Controller
 {
@@ -76,7 +77,9 @@ class RoleController extends Controller
     {
         try {
             
-            $role = $this->roleService->create($request->all());
+            $role = $this->roleService->create(Arr::only($request->all(),'name'));
+
+            $role->permissions()->sync($request->permisssions,true);
 
             return response()->json(['status' => 'success', 'message' => "Le rôle a bien été crée", 'data' => $role], Response::HTTP_OK);
         
@@ -115,7 +118,11 @@ class RoleController extends Controller
     {
         try {
             
-            $role = $this->roleService->update($request->all(), $id);
+            //$role = $this->roleService->update($request->all(), $id);
+
+            $role =  $this->roleService->update(Arr::only($request->all(),'name'),$id);
+
+            $role->permissions()->sync($request->permisssions,false);
 
             return response()->json(['status' => 'success', 'message' => "Le rôle a bien été modifié", 'data' => $role], Response::HTTP_OK);
         
