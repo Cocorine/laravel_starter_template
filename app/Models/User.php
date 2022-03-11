@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use App\Traits\Eloquents\HasPermissionsTrait;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasApiTokens; // trait function importation
+    use HasPermissionsTrait, HasApiTokens, HasFactory, Notifiable; // trait function importation
+    use HasPermissionsTrait; //Import The Trait
 
     /**
      * The table associated with the model.

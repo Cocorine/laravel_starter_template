@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +44,8 @@ Route::group(['middleware' => ['cors', 'json.response'], 'as' => 'api.', 'prefix
 
 
 
-    Route::group(['middleware' => ['auth:api']], function () {
-        
+    Route::group(['middleware' => [/* 'auth:api' */]], function () {
+
         /**
          *
          * User's api resource routes
@@ -69,6 +70,11 @@ Route::group(['middleware' => ['cors', 'json.response'], 'as' => 'api.', 'prefix
          * Permission's api resource routes
          */
         Route::apiResource('permissions', 'PermissionController')->names('permissions'); // embed all permission's controller api function route
+
+        Route::get('get-list-of-permissions-with-trashed', 'PermissionController@allWithTrashed')->name('permissions.all.trashed');
+
+        Route::get('/permissions/{permission}/destroy', 'PermissionController@delete')->name('permissions.delete');
+
         /* 
 
             Route::controller('PermissionController')->group(['as' => 'permissions.'],function () {
@@ -85,21 +91,25 @@ Route::group(['middleware' => ['cors', 'json.response'], 'as' => 'api.', 'prefix
          * Role's api resource routes
          */
         Route::apiResource('roles', 'RoleController')->names('roles'); // embed all role's controller api function route
-        /* 
 
-            Route::controller('RoleController')->group(['as' => 'roles.'],function () {
+        Route::get('/get-list-of-roles-with-trashed', 'RoleController@allWithTrashed')->name('roles.all.trashed');
 
-                Route::get('/delete/{role}','RoleController@delete')->name('delete');
-                Route::get('/get-list-of-all-roles','RoleController@get_list_of_all_roles')->name('all-roles');
+        Route::get('/roles/{role}/destroy', 'RoleController@delete')->name('roles.delete');
 
-            });
+        /* Route::controller(RoleController::class,function () {
 
-        */
+            Route::get('/roles/{role}/destroy', 'RoleController@delete')->name('deleteRole');
+
+            Route::get('/get-list-of-all-with-trashed', 'allWithTrashed')->name('roles.all-roles-with-trashed');
+
+        }); */
+
+
 
         /* 
             Route::controller('AppController')->group(function () {
 
-                Route::get('/get-list-notifications','AppController@getNotifications')->name('notiifications.list');
+                Route::get('/get-list-notifications','AppController@getNotifications')->name('notifications.list');
 
                 Route::get('/get-settings','AppController@getSettings')->name('settings.list');
 
